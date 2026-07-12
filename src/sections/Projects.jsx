@@ -1,8 +1,9 @@
 import { ArrowUpRight, Github } from "lucide-react";
 import { AnimatedBorderButton } from "@/components/AnimatedBorderButton";
-import portfolio from "@/data/portfolio.json";
+import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 
 export const Projects = () => {
+  const { content: portfolio } = usePortfolioContent();
   const { projectsSection } = portfolio;
   return (
     <section id="projects" className="py-32 relative overflow-hidden">

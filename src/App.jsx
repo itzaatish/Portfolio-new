@@ -7,25 +7,28 @@ import { Testimonials } from "@/sections/Testimonials";
 import { Contact } from "@/sections/Contact";
 import { Footer } from "./layout/Footer";
 import { ContentAdmin } from "./pages/ContentAdmin";
+import { PortfolioContentProvider } from "./context/PortfolioContentContext.jsx";
 
 function App() {
-  if (window.location.pathname.replace(/\/+$/, "") === "/admin") {
-    return <ContentAdmin />;
-  }
-
   return (
-    <div className="min-h-screen overflow-x-hidden">
-      <Navbar />
-      <main>
-        <Hero />
-        <About />
-        <Projects />
-        <Experience />
-        <Testimonials />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <PortfolioContentProvider>
+      {window.location.pathname.replace(/\/+$/, "") === "/admin" ? (
+        <ContentAdmin />
+      ) : (
+        <div className="min-h-screen overflow-x-hidden">
+          <Navbar />
+          <main>
+            <Hero />
+            <About />
+            <Projects />
+            <Experience />
+            <Testimonials />
+            <Contact />
+          </main>
+          <Footer />
+        </div>
+      )}
+    </PortfolioContentProvider>
   );
 }
 

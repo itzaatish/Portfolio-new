@@ -16,9 +16,13 @@ The React Compiler is not enabled on this template because of its impact on dev 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 # Portfolio-new
 
-## Local content editor
+## Supabase content editor
 
-Run `npm run dev`, then open `/admin` (for example, `http://localhost:5173/admin`).
-The editor is intentionally unprotected for this local-development phase and saves
-all portfolio content to `src/data/portfolio.json`. The public portfolio reads
-from that same file. Supabase will replace this local save mechanism later.
+1. Copy `.env.example` to `.env` and add your Supabase project URL and publishable key.
+2. Run [`supabase/schema.sql`](supabase/schema.sql) in Supabase Dashboard → SQL Editor.
+3. Create your email/password user in Supabase Auth, then open `/admin` and sign in.
+
+The first authenticated user to save becomes the permanent owner of the one
+portfolio row. The public website can read that row; only its owner can update it.
+`src/data/portfolio.json` remains a fallback for local development if the remote
+content has not been created yet.

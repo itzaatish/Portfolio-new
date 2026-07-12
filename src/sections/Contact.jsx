@@ -9,11 +9,12 @@ import {
 import { Button } from "@/components/Button";
 import { useState } from "react";
 import emailjs from "@emailjs/browser";
-import portfolio from "@/data/portfolio.json";
+import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 
 const contactIcons = { mail: Mail, phone: Phone, "map-pin": MapPin };
 
 export const Contact = () => {
+  const { content: portfolio } = usePortfolioContent();
   const { contact } = portfolio;
   const [formData, setFormData] = useState({
     name: "",

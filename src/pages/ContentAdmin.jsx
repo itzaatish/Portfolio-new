@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import defaultContent from "@/data/portfolio.json";
+import { usePortfolioContent } from "@/hooks/usePortfolioContent";
+import { supabase } from "@/utils/superbase";
 
 const arrayItemTemplates = {
   "navigation.links": { href: "#", label: "New link" },
@@ -142,68 +143,120 @@ function ContentEditor({ value, path, update }) {
   );
 }
 
+const AdminLogin = ({ onSubmit, status }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  return (
+    <main className="flex min-h-screen items-center justify-center bg-background p-4 text-foreground">
+      <form onSubmit={(event) => onSubmit(event, email, password)} className="glass w-full max-w-md space-y-5 rounded-2xl p-7">
+        <div>
+          <p className="text-sm font-medium uppercase tracking-wider text-primary">Portfolio editor</p>
+          <h1 className="mt-2 text-3xl font-bold">Sign in</h1>
+          <p className="mt-2 text-sm text-muted-foreground">Only the account configured as this portfolio's owner can save changes.</p>
+        </div>
+        <label className="block space-y-2">
+          <span className="text-sm font-medium">Email</span>
+          <input type="email" required value={email} onChange={(event) => setEmail(event.target.value)} className="w-full rounded-lg border border-border bg-background px-3 py-2 outline-none focus:border-primary" />
+        </label>
+        <label className="block space-y-2">
+          <span className="text-sm font-medium">Password</span>
+          <input type="password" required value={password} onChange={(event) => setPassword(event.target.value)} className="w-full rounded-lg border border-border bg-background px-3 py-2 outline-none focus:border-primary" />
+        </label>
+        {status && <p aria-live="polite" className="text-sm text-red-300">{status}</p>}
+        <button type="submit" className="w-full rounded-full bg-primary px-6 py-3 font-medium text-primary-foreground hover:bg-primary/90">Sign in</button>
+      </form>
+    </main>
+  );
+};
+
 export const ContentAdmin = () => {
-  const [content, setContent] = useState(() => clone(defaultContent));
-  const [status, setStatus] = useState("Loading local content…");
+  const { content, loadError, saveContent } = usePortfolioContent();
+  const [draft, setDraft] = useState(null);
+  const [session, setSession] = useState(null);
+  const [isCheckingSession, setIsCheckingSession] = useState(true);
+  const [status, setStatus] = useState("");
 
   useEffect(() => {
-    fetch("/api/portfolio-content")
-      .then((response) => {
-        if (!response.ok) throw new Error("The local editor API is unavailable.");
-        return response.json();
-      })
-      .then((data) => {
-        setContent(data);
-        setStatus("");
-      })
-      .catch(() => setStatus("Local save is available only while `npm run dev` is running."));
+    setDraft(clone(content));
+  }, [content]);
+
+  useEffect(() => {
+    supabase.auth.getSession().then(({ data, error }) => {
+      if (error) setStatus(error.message);
+      setSession(data.session);
+      setIsCheckingSession(false);
+    });
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, nextSession) => {
+      setSession(nextSession);
+      setIsCheckingSession(false);
+    });
+
+    return () => listener.subscription.unsubscribe();
   }, []);
 
-  const saveContent = async (event) => {
+  const signIn = async (event, email, password) => {
     event.preventDefault();
-    setStatus("Saving to src/data/portfolio.json…");
+    setStatus("Signing in…");
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    setStatus(error ? error.message : "");
+  };
+
+  const handleSave = async (event) => {
+    event.preventDefault();
+    setStatus("Saving to Supabase…");
 
     try {
-      const response = await fetch("/api/portfolio-content", {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(content),
-      });
-      if (!response.ok) throw new Error();
-      const saved = await response.json();
-      setContent(saved.content);
-      setStatus("Saved locally. Refresh the portfolio to view the latest content.");
-    } catch {
-      setStatus("Could not save. Run the project with `npm run dev` and try again.");
+      const savedContent = await saveContent(draft, session.user.id);
+      setDraft(clone(savedContent));
+      setStatus("Saved. The public portfolio will use these changes on its next load.");
+    } catch (error) {
+      setStatus(`Could not save: ${error.message}`);
     }
   };
 
+  if (isCheckingSession) {
+    return <main className="grid min-h-screen place-items-center bg-background text-muted-foreground">Checking your session…</main>;
+  }
+
+  if (!session) return <AdminLogin onSubmit={signIn} status={status} />;
+
+  if (!draft) {
+    return <main className="grid min-h-screen place-items-center bg-background text-muted-foreground">Loading portfolio content…</main>;
+  }
+
   return (
     <main className="min-h-screen bg-background px-4 py-10 text-foreground sm:px-8">
-      <form onSubmit={saveContent} className="mx-auto max-w-5xl space-y-8">
+      <form onSubmit={handleSave} className="mx-auto max-w-5xl space-y-8">
         <header className="space-y-3">
           <p className="text-sm font-medium uppercase tracking-wider text-primary">Local content editor</p>
           <h1 className="text-3xl font-bold sm:text-4xl">Edit your portfolio</h1>
           <p className="max-w-3xl text-muted-foreground">
-            This unprotected development page saves all content into <code>src/data/portfolio.json</code>. Image fields accept a public image path or URL for now; uploads will be added with Supabase.
+            Signed in as {session.user.email}. Edit every portfolio field here, then save it to Supabase. Image fields currently accept a public path or URL.
           </p>
         </header>
 
-        {Object.entries(content).map(([key, value]) => (
+        {loadError && <p className="rounded-xl border border-amber-500/30 bg-amber-500/10 p-4 text-sm text-amber-200">Supabase content could not load, so you are seeing the local fallback: {loadError.message}</p>}
+
+        {Object.entries(draft).map(([key, value]) => (
           <section key={key} className="glass rounded-2xl p-5 sm:p-7">
             <h2 className="mb-6 text-2xl font-bold text-primary">{formatLabel(key)}</h2>
             <ContentEditor
               value={value}
               path={key}
-              update={(nextValue) => setContent((current) => ({ ...current, [key]: nextValue }))}
+              update={(nextValue) => setDraft((current) => ({ ...current, [key]: nextValue }))}
             />
           </section>
         ))}
 
         <div className="sticky bottom-4 flex flex-col gap-3 rounded-2xl border border-primary/30 bg-surface/95 p-4 shadow-xl backdrop-blur sm:flex-row sm:items-center sm:justify-between">
-          <p aria-live="polite" className="text-sm text-muted-foreground">{status}</p>
+          <div className="flex items-center gap-4">
+            <p aria-live="polite" className="text-sm text-muted-foreground">{status}</p>
+            <button type="button" onClick={() => supabase.auth.signOut()} className="text-sm text-primary hover:underline">Sign out</button>
+          </div>
           <button type="submit" className="rounded-full bg-primary px-6 py-3 font-medium text-primary-foreground hover:bg-primary/90">
-            Save all content locally
+            Save all content
           </button>
         </div>
       </form>

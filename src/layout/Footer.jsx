@@ -1,10 +1,11 @@
 import { Github, Linkedin, Twitter, Heart } from "lucide-react";
-import portfolio from "@/data/portfolio.json";
+import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 
 const socialIcons = { github: Github, linkedin: Linkedin, twitter: Twitter };
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { content: portfolio } = usePortfolioContent();
   const { footer, site } = portfolio;
 
   return (

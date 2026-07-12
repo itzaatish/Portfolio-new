@@ -1,9 +1,10 @@
 import { Code2, Lightbulb, Rocket, Users } from "lucide-react";
-import portfolio from "@/data/portfolio.json";
+import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 
 const highlightIcons = { code: Code2, rocket: Rocket, users: Users, lightbulb: Lightbulb };
 
 export const About = () => {
+  const { content: portfolio } = usePortfolioContent();
   const { about } = portfolio;
   return (
     <section id="about" className="py-32 relative overflow-hidden">

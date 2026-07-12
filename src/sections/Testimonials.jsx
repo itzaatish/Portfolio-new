@@ -1,9 +1,10 @@
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 import { useState } from "react";
-import portfolio from "@/data/portfolio.json";
+import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 
 export const Testimonials = () => {
   const [activeIdx, setActiveIdx] = useState(0);
+  const { content: portfolio } = usePortfolioContent();
   const { testimonialsSection } = portfolio;
   const testimonials = testimonialsSection.items;
 

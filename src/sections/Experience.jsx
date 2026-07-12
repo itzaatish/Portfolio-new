@@ -1,6 +1,7 @@
-import portfolio from "@/data/portfolio.json";
+import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 
 export const Experience = () => {
+  const { content: portfolio } = usePortfolioContent();
   const { experienceSection } = portfolio;
   return (
     <section id="experience" className="py-32 relative overflow-hidden">

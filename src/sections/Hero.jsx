@@ -8,7 +8,7 @@ import {
   Download,
 } from "lucide-react";
 import { AnimatedBorderButton } from "../components/AnimatedBorderButton";
-import portfolio from "@/data/portfolio.json";
+import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 
 const socialIcons = { Github, Linkedin, Twitter };
 const driftDots = Array.from({ length: 30 }, () => ({
@@ -19,6 +19,7 @@ const driftDots = Array.from({ length: 30 }, () => ({
 }));
 
 export const Hero = () => {
+  const { content: portfolio } = usePortfolioContent();
   const { hero } = portfolio;
   return (
     <section className="relative min-h-screen flex items-center overflow-hidden">
