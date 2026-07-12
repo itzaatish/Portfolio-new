@@ -1,20 +1,11 @@
 import { Github, Linkedin, Twitter, Heart } from "lucide-react";
+import portfolio from "@/data/portfolio.json";
 
-const socialLinks = [
-  { icon: Github, href: "#", label: "GitHub" },
-  { icon: Linkedin, href: "#", label: "LinkedIn" },
-  { icon: Twitter, href: "#", label: "Twitter" },
-];
-
-const footerLinks = [
-  { href: "#about", label: "About" },
-  { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
-  { href: "#contact", label: "Contact" },
-];
+const socialIcons = { github: Github, linkedin: Linkedin, twitter: Twitter };
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { footer, site } = portfolio;
 
   return (
     <footer className="py-12 border-t border-border">
@@ -23,16 +14,16 @@ export const Footer = () => {
           {/* Logo & Copyright */}
           <div className="text-center md:text-left">
             <a href="#" className="text-xl font-bold tracking-tight">
-              PM<span className="text-primary">.</span>
+              {site.logo}<span className="text-primary">.</span>
             </a>
             <p className="text-sm text-muted-foreground mt-2">
-              © {currentYear} Pedro Machado. All rights reserved.
+              © {currentYear} {site.copyrightName}. All rights reserved.
             </p>
           </div>
 
           {/* Links */}
           <nav className="flex flex-wrap justify-center gap-6">
-            {footerLinks.map((link) => (
+            {footer.links.map((link) => (
               <a
                 key={link.href}
                 href={link.href}
@@ -45,16 +36,18 @@ export const Footer = () => {
 
           {/* Social Links */}
           <div className="flex items-center gap-4">
-            {socialLinks.map((social) => (
+            {footer.socials.map((social) => {
+              const Icon = socialIcons[social.platform] || Github;
+              return (
               <a
                 key={social.label}
-                href={social.href}
+                href={social.url}
                 aria-label={social.label}
                 className="p-2 rounded-full glass hover:bg-primary/10 hover:text-primary transition-all"
               >
-                <social.icon className="w-5 h-5" />
+                <Icon className="w-5 h-5" />
               </a>
-            ))}
+            )})}
           </div>
         </div>
       </div>

@@ -1,15 +1,10 @@
 import { Button } from "@/components/Button";
 import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
-
-const navLinks = [
-  { href: "#about", label: "About" },
-  { href: "#projects", label: "Projects" },
-  { href: "#experience", label: "Experience" },
-  { href: "#testimonials", label: "Testimonials" },
-];
+import portfolio from "@/data/portfolio.json";
 
 export const Navbar = () => {
+  const { navigation, site } = portfolio;
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -34,13 +29,13 @@ export const Navbar = () => {
           href="#"
           className="text-xl font-bold tracking-tight hover:text-primary"
         >
-          PM<span className="text-primary">.</span>
+          {site.logo}<span className="text-primary">.</span>
         </a>
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-1">
           <div className="glass rounded-full px-2 py-1 flex items-center gap-1">
-            {navLinks.map((link, index) => (
+            {navigation.links.map((link, index) => (
               <a
                 href={link.href}
                 key={index}
@@ -54,7 +49,7 @@ export const Navbar = () => {
 
         {/* CTA Button */}
         <div className="hidden md:block">
-          <Button size="sm">Contact Me</Button>
+          <Button size="sm" onClick={() => { window.location.hash = "contact"; }}>{navigation.contactButtonLabel}</Button>
         </div>
 
         {/* Mobile Menu Button */}
@@ -70,7 +65,7 @@ export const Navbar = () => {
       {isMobileMenuOpen && (
         <div className="md:hidden glass-strong animate-fade-in">
           <div className="container mx-auto px-6 py-6 flex flex-col gap-4">
-            {navLinks.map((link, index) => (
+            {navigation.links.map((link, index) => (
               <a
                 href={link.href}
                 key={index}
@@ -81,8 +76,8 @@ export const Navbar = () => {
               </a>
             ))}
 
-            <Button onClick={() => setIsMobileMenuOpen(false)}>
-              Contact Me
+            <Button onClick={() => { setIsMobileMenuOpen(false); window.location.hash = "contact"; }}>
+              {navigation.contactButtonLabel}
             </Button>
           </div>
         </div>

@@ -15,3 +15,10 @@ The React Compiler is not enabled on this template because of its impact on dev 
 
 If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
 # Portfolio-new
+
+## Local content editor
+
+Run `npm run dev`, then open `/admin` (for example, `http://localhost:5173/admin`).
+The editor is intentionally unprotected for this local-development phase and saves
+all portfolio content to `src/data/portfolio.json`. The public portfolio reads
+from that same file. Supabase will replace this local save mechanism later.

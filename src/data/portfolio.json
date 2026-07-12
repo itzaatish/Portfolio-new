@@ -1,0 +1,287 @@
+{
+  "site": {
+    "logo": "AK",
+    "copyrightName": "Aatish Kumar"
+  },
+  "navigation": {
+    "links": [
+      {
+        "href": "#about",
+        "label": "About"
+      },
+      {
+        "href": "#projects",
+        "label": "Projects"
+      },
+      {
+        "href": "#experience",
+        "label": "Experience"
+      },
+      {
+        "href": "#testimonials",
+        "label": "Testimonials"
+      }
+    ],
+    "contactButtonLabel": "Contact Me"
+  },
+  "hero": {
+    "backgroundImage": "/hero-bg.jpg",
+    "backgroundImageAlt": "Hero image",
+    "eyebrow": "Software Engineer • React Specialist",
+    "headlineBefore": "Crafting",
+    "headlineHighlight": "digital",
+    "headlineMiddle": "experiences with",
+    "headlineEmphasis": "precision.",
+    "introduction": "Hi, Aatish Kumar — a software engineer specializing in React, Next.js, and TypeScript. I build scalable, performant web applications that users love.",
+    "contactButtonLabel": "Contact Me",
+    "resumeButtonLabel": "Download CV",
+    "resumeUrl": "#",
+    "followLabel": "Follow me:",
+    "socials": [
+      {
+        "platform": "github",
+        "url": "#"
+      },
+      {
+        "platform": "linkedin",
+        "url": "#"
+      },
+      {
+        "platform": "Hello world",
+        "url": "#"
+      }
+    ],
+    "profileImage": "/profile-photo.jpg",
+    "profileImageAlt": "Pedro Machado",
+    "availabilityLabel": "Available for work",
+    "experienceValue": "5+",
+    "experienceLabel": "Years Exp.",
+    "skillsLabel": "Technologies I work with",
+    "skills": [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "GraphQL",
+      "PostgreSQL",
+      "MongoDB",
+      "Redis",
+      "Docker",
+      "AWS",
+      "Vercel",
+      "Tailwind CSS",
+      "Prisma",
+      "Jest",
+      "Cypress",
+      "Figma",
+      "Git",
+      "GitHub Actions"
+    ],
+    "scrollLabel": "Scroll"
+  },
+  "about": {
+    "eyebrow": "About Me",
+    "headlineBefore": "Building the future,",
+    "headlineEmphasis": "one component at a time.",
+    "paragraphs": [
+      "When I'm not coding, you'll find me exploring new technologies, contributing to open-source projects, or sharing knowledge with the developer community."
+    ],
+    "mission": "My mission is to create digital experiences that are not just functional, but truly delightful — products that users love to use and developers love to maintain.",
+    "highlights": [
+      {
+        "icon": "code",
+        "title": "Clean Code",
+        "description": "Writing maintainable, scalable code that stands the test of time."
+      },
+      {
+        "icon": "rocket",
+        "title": "Performance",
+        "description": "Optimizing for speed and delivering lightning-fast user experiences."
+      },
+      {
+        "icon": "users",
+        "title": "Collaboration",
+        "description": "Working closely with teams to bring ideas to life."
+      },
+      {
+        "icon": "lightbulb",
+        "title": "Innovation",
+        "description": "Staying ahead with the latest technologies and best practices."
+      }
+    ]
+  },
+  "projectsSection": {
+    "eyebrow": "Featured Work",
+    "headlineBefore": "Projects that",
+    "headlineEmphasis": "make an impact.",
+    "description": "A selection of my recent work, from complex web applications to innovative tools that solve real-world problems.",
+    "viewAllLabel": "View All Projects",
+    "viewAllUrl": "#",
+    "projects": [
+      {
+        "title": "Fintech Dashboard",
+        "description": "A comprehensive financial analytics platform with real-time data visualization, portfolio management, and AI-powered insights.",
+        "image": "/projects/project1.png",
+        "tags": [
+          "React",
+          "Typescript",
+          "NodeJS"
+        ],
+        "link": "#",
+        "github": "#"
+      },
+      {
+        "title": "E-Commerce Platform",
+        "description": "A full-featured e-commerce solution with inventory management, payment processing, and analytics dashboard.",
+        "image": "/projects/project2.png",
+        "tags": [
+          "Next.js",
+          "Stripe",
+          "PostgreSQL",
+          "Tailwind"
+        ],
+        "link": "#",
+        "github": "#"
+      },
+      {
+        "title": "AI Writing Assistant",
+        "description": "An intelligent writing tool powered by GPT-4, helping users create better content faster.",
+        "image": "/projects/project3.png",
+        "tags": [
+          "React",
+          "OpenAI",
+          "Python",
+          "FastAPI"
+        ],
+        "link": "#",
+        "github": "#"
+      }
+    ]
+  },
+  "experienceSection": {
+    "eyebrow": "Career Journey",
+    "headlineBefore": "Experience that",
+    "headlineEmphasis": "speaks volumes.",
+    "description": "A timeline of my professional growth, from curious beginner to senior engineer leading teams and building products at scale.",
+    "items": [
+      {
+        "period": "2022 — Present",
+        "role": "Senior Frontend Engineer",
+        "company": "Tech Innovators Inc.",
+        "description": "Leading frontend architecture for a suite of fintech products. Implemented micro-frontend architecture, reduced bundle size by 40%, and mentored a team of 5 developers.",
+        "technologies": [
+          "React",
+          "TypeScript",
+          "Next.js",
+          "GraphQL"
+        ],
+        "current": true
+      },
+      {
+        "period": "2018 — 2019",
+        "role": "Freelance Developer",
+        "company": "Self-Employed",
+        "description": "Delivered custom web solutions for small businesses and startups. Built 15+ websites and applications, handling everything from design to deployment.",
+        "technologies": [
+          "JavaScript",
+          "PHP",
+          "WordPress",
+          "MySQL"
+        ],
+        "current": false
+      },
+      {
+        "period": "132w41235",
+        "role": "hello world",
+        "company": "mytime being",
+        "description": "1234556 fnadha f",
+        "technologies": [],
+        "current": true
+      }
+    ]
+  },
+  "testimonialsSection": {
+    "eyebrow": "What People Say",
+    "headlineBefore": "Kind words from",
+    "headlineEmphasis": "amazing people.",
+    "items": []
+  },
+  "contact": {
+    "eyebrow": "Get In Touch",
+    "headlineBefore": "Let's build",
+    "headlineEmphasis": "something great.",
+    "description": "Have a project in mind? I'd love to hear about it. Send me a message and let's discuss how we can work together.",
+    "form": {
+      "nameLabel": "Name",
+      "namePlaceholder": "Your name...",
+      "emailLabel": "Email",
+      "emailPlaceholder": "your@email.com",
+      "messageLabel": "Message",
+      "messagePlaceholder": "Your message...",
+      "submitLabel": "Send Message",
+      "sendingLabel": "Sending...",
+      "successMessage": "Message sent successfully! I'll get back to you soon.",
+      "failureMessage": "Failed to send message. Please try again later."
+    },
+    "informationHeading": "Contact Information",
+    "details": [
+      {
+        "icon": "mail",
+        "label": "Email",
+        "value": "pedro@example.com",
+        "href": "mailto:pedro@example.com"
+      },
+      {
+        "icon": "phone",
+        "label": "Phone",
+        "value": "+1 (555) 123-4567",
+        "href": "tel:+15551234567"
+      },
+      {
+        "icon": "map-pin",
+        "label": "Location",
+        "value": "San Francisco, CA",
+        "href": "#"
+      }
+    ],
+    "availabilityTitle": "Currently Available",
+    "availabilityDescription": "I'm currently open to new opportunities and exciting projects. Whether you need a full-time engineer or a freelance consultant, let's talk!"
+  },
+  "footer": {
+    "links": [
+      {
+        "href": "#about",
+        "label": "About"
+      },
+      {
+        "href": "#projects",
+        "label": "Projects"
+      },
+      {
+        "href": "#experience",
+        "label": "Experience"
+      },
+      {
+        "href": "#contact",
+        "label": "Contact"
+      }
+    ],
+    "socials": [
+      {
+        "platform": "github",
+        "url": "#",
+        "label": "GitHub"
+      },
+      {
+        "platform": "linkedin",
+        "url": "#",
+        "label": "LinkedIn"
+      },
+      {
+        "platform": "twitter",
+        "url": "#",
+        "label": "Twitter"
+      }
+    ]
+  }
+}

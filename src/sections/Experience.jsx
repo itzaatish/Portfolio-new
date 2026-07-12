@@ -1,43 +1,7 @@
-const experiences = [
-  {
-    period: "2022 — Present",
-    role: "Senior Frontend Engineer",
-    company: "Tech Innovators Inc.",
-    description:
-      "Leading frontend architecture for a suite of fintech products. Implemented micro-frontend architecture, reduced bundle size by 40%, and mentored a team of 5 developers.",
-    technologies: ["React", "TypeScript", "Next.js", "GraphQL"],
-    current: true,
-  },
-  {
-    period: "2020 — 2022",
-    role: "Frontend Engineer",
-    company: "Digital Solutions Co.",
-    description:
-      "Built and maintained multiple React applications for enterprise clients. Introduced automated testing practices that improved code coverage to 85%.",
-    technologies: ["React", "Redux", "Jest", "Cypress"],
-    current: false,
-  },
-  {
-    period: "2019 — 2020",
-    role: "Junior Developer",
-    company: "StartUp Labs",
-    description:
-      "Contributed to the development of a SaaS platform from MVP to production. Collaborated with designers to implement pixel-perfect UI components.",
-    technologies: ["React", "Node.js", "MongoDB", "AWS"],
-    current: false,
-  },
-  {
-    period: "2018 — 2019",
-    role: "Freelance Developer",
-    company: "Self-Employed",
-    description:
-      "Delivered custom web solutions for small businesses and startups. Built 15+ websites and applications, handling everything from design to deployment.",
-    technologies: ["JavaScript", "PHP", "WordPress", "MySQL"],
-    current: false,
-  },
-];
+import portfolio from "@/data/portfolio.json";
 
 export const Experience = () => {
+  const { experienceSection } = portfolio;
   return (
     <section id="experience" className="py-32 relative overflow-hidden">
       <div
@@ -52,17 +16,16 @@ export const Experience = () => {
             className="text-secondary-foreground text-sm
            font-medium tracking-wider uppercase animate-fade-in"
           >
-            Career Journey
+            {experienceSection.eyebrow}
           </span>
           <h2
             className="text-4xl md:text-5xl font-bold
            mt-4 mb-6 animate-fade-in animation-delay-100
             text-secondary-foreground"
           >
-            Experience that{" "}
+            {experienceSection.headlineBefore}{" "}
             <span className="font-serif italic font-normal text-white">
-              {" "}
-              speaks volumes.
+              {" "}{experienceSection.headlineEmphasis}
             </span>
           </h2>
 
@@ -70,8 +33,7 @@ export const Experience = () => {
             className="text-muted-foreground
            animate-fade-in animation-delay-200"
           >
-            A timeline of my professional growth, from curious beginner to
-            senior engineer leading teams and building products at scale.
+            {experienceSection.description}
           </p>
         </div>
 
@@ -81,7 +43,7 @@ export const Experience = () => {
 
           {/* Experience Items */}
           <div className="space-y-12">
-            {experiences.map((exp, idx) => (
+            {experienceSection.items.map((exp, idx) => (
               <div
                 key={idx}
                 className="relative grid md:grid-cols-2 gap-8 animate-fade-in"

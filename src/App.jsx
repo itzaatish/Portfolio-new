@@ -6,8 +6,13 @@ import { Experience } from "@/sections/Experience";
 import { Testimonials } from "@/sections/Testimonials";
 import { Contact } from "@/sections/Contact";
 import { Footer } from "./layout/Footer";
+import { ContentAdmin } from "./pages/ContentAdmin";
 
 function App() {
+  if (window.location.pathname.replace(/\/+$/, "") === "/admin") {
+    return <ContentAdmin />;
+  }
+
   return (
     <div className="min-h-screen overflow-x-hidden">
       <Navbar />
