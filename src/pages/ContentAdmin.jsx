@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { usePortfolioContent } from "@/hooks/usePortfolioContent";
 import { supabase } from "@/utils/superbase";
+import { uploadImage } from "@/services/portfolioContent";
 
 const arrayItemTemplates = {
   "navigation.links": { href: "#", label: "New link" },
@@ -33,6 +34,50 @@ const formatLabel = (value) =>
 
 const clone = (value) => JSON.parse(JSON.stringify(value));
 
+function ImageUploadField({ value, onChange }) {
+  const [uploadStatus, setUploadStatus] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
+
+  const handleFileSelect = async (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+
+    setIsUploading(true);
+    setUploadStatus("Uploading...");
+    try {
+      const newUrl = await uploadImage(file, value);
+      onChange(newUrl);
+      setUploadStatus(`Success! New URL: ${newUrl}`);
+    } catch (error) {
+      setUploadStatus(`Upload failed: ${error.message}`);
+    } finally {
+      setIsUploading(false);
+    }
+  };
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-4">
+        {value && <img src={value} alt="Preview" className="h-16 w-16 rounded-lg border border-border object-cover" />}
+        <input
+          type="text"
+          value={value}
+          onChange={(event) => onChange(event.target.value)}
+          placeholder="Enter image URL or upload a new one"
+          className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none focus:border-primary"
+        />
+      </div>
+      <div>
+        <label className="block w-full cursor-pointer rounded-lg border border-dashed border-border px-3 py-2 text-center text-sm hover:border-primary">
+          {isUploading ? "Uploading..." : "Upload New Image"}
+          <input type="file" accept="image/*" onChange={handleFileSelect} disabled={isUploading} className="sr-only" />
+        </label>
+        {uploadStatus && <p className="mt-2 text-xs text-muted-foreground">{uploadStatus}</p>}
+      </div>
+    </div>
+  );
+}
+
 function EditorField({ label, value, onChange, path }) {
   if (typeof value === "boolean") {
     return (
@@ -44,6 +89,16 @@ function EditorField({ label, value, onChange, path }) {
           className="h-4 w-4 accent-primary"
         />
         {formatLabel(label)}
+      </label>
+    );
+  }
+
+  const isImageField = /(image|avatar|logo|backgroundImage)/i.test(path);
+  if (isImageField) {
+    return (
+      <label className="block space-y-2">
+        <span className="text-sm font-medium text-foreground">{formatLabel(label)}</span>
+        <ImageUploadField value={value} onChange={onChange} />
       </label>
     );
   }
@@ -233,7 +288,7 @@ export const ContentAdmin = () => {
           <p className="text-sm font-medium uppercase tracking-wider text-primary">Local content editor</p>
           <h1 className="text-3xl font-bold sm:text-4xl">Edit your portfolio</h1>
           <p className="max-w-3xl text-muted-foreground">
-            Signed in as {session.user.email}. Edit every portfolio field here, then save it to Supabase. Image fields currently accept a public path or URL.
+            Signed in as {session.user.email}. Edit every portfolio field here, then save it to Supabase. Image fields now support file uploads.
           </p>
         </header>
 
